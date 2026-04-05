@@ -126,6 +126,36 @@
         .btn-cart:active {
             transform: scale(0.95);
         }
+        
+        /* Стиль для блока пользователя */
+        .user-info-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.05);
+            padding: 5px 12px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+        }
+        .logout-btn {
+            background: #dc2626;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            color: white;
+        }
+        .logout-btn:hover {
+            background: #b91c1c;
+            transform: scale(0.96);
+        }
+        .user-name {
+            color: #a78bfa;
+            font-weight: 500;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body class="relative-z">
@@ -133,10 +163,10 @@
     <!-- Модальное окно входа -->
     <div id="authModal" class="modal">
         <div class="modal-content">
-            <h2 class="text-2xl font-bold text-white mb-4">Вход в аккаунт</h2>
+            <h2 class="text-2xl font-bold text-white mb-4">Вход / Регистрация</h2>
             <input type="text" id="loginName" placeholder="Ваше имя" class="w-full mb-3 p-3 rounded-lg bg-gray-800 text-white border border-gray-700">
             <input type="text" id="loginPhone" placeholder="Телефон" class="w-full mb-3 p-3 rounded-lg bg-gray-800 text-white border border-gray-700">
-            <button onclick="userLogin()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-lg transition">Войти</button>
+            <button onclick="userLogin()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-lg transition">Войти / Зарегистрироваться</button>
             <p class="text-gray-400 text-sm mt-3 text-center">Войдите, чтобы покупать и отслеживать заказы</p>
         </div>
     </div>
@@ -168,10 +198,11 @@
             </a>
             <div class="flex items-center gap-6">
                 <div id="userInfo" class="text-gray-300 flex items-center gap-3">
+                    <!-- Здесь динамически будет отображаться кнопка входа или информация о пользователе -->
                     <button onclick="showAuthModal()" id="loginBtn" class="bg-indigo-600 px-4 py-1 rounded-lg text-sm hover:bg-indigo-700">Войти</button>
                     <button onclick="showAdminLogin()" class="text-gray-400 hover:text-indigo-400 text-sm">Админ</button>
                 </div>
-                <a href="cart.html" class="relative">
+                <a href="#" id="cartLink" class="relative">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-300 hover:text-indigo-400 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6M17 13l1.5 6M9 21h6M9 21a2 2 0 11-4 0m8 0a2 2 0 11-4 0" />
                     </svg>
@@ -195,7 +226,7 @@
                 </div>
             </div>
             <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-                <img class="object-cover object-center rounded" alt="hero" src="x.png">
+                <img class="object-cover object-center rounded" alt="hero" src="x.png" 
             </div>
         </div>
     </section>
@@ -240,7 +271,7 @@
         </div>
     </section>
 
-    <!-- Каталог подарков - единый стиль -->
+    <!-- Каталог подарков -->
     <section id="catalog" class="text-white body-font py-12">
         <div class="container px-5 mx-auto">
             <div class="text-center mb-12">
@@ -290,64 +321,34 @@
 
     <!-- Футер -->
     <footer class="text-gray-400 bg-gray-900 body-font">
-  <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
-    <a class="flex title-font font-medium items-center md:justify-start justify-center text-white">
-      <img src="https://images.icon-icons.com/1835/PNG/512/iconfindergiftsaleshop4177585-115977_115938.png" alt="Gift Icon" class="w-10 h-10 text-white p-2 bg-gray-400 rounded-full">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-      </svg>
-      <span class="ml-3 text-xl">Amir</span>
-    </a>
-    <p class="text-sm text-gray-400 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-800 sm:py-2 sm:mt-0 mt-4">© 2026 Amir —
-      <a href="https://t.me/Felenge_11" class="text-gray-500 ml-1" target="_blank" rel="noopener noreferrer"> @Felenge_11 </a>
-    </p>
-    <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
-      <a class="text-gray-400">
-        
-<svg fill="#57ffff" width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"><path d="M15.07294,2H8.9375C3.33331,2,2,3.33331,2,8.92706V15.0625C2,20.66663,3.32294,22,8.92706,22H15.0625C20.66669,22,22,20.67706,22,15.07288V8.9375C22,3.33331,20.67706,2,15.07294,2Zm3.07287,14.27081H16.6875c-.55206,0-.71875-.44793-1.70831-1.4375-.86463-.83331-1.22919-.9375-1.44794-.9375-.30206,0-.38544.08332-.38544.5v1.3125c0,.35419-.11456.5625-1.04162.5625a5.69214,5.69214,0,0,1-4.44794-2.66668A11.62611,11.62611,0,0,1,5.35419,8.77081c0-.21875.08331-.41668.5-.41668H7.3125c.375,0,.51044.16668.65625.55212.70831,2.08331,1.91669,3.89581,2.40625,3.89581.1875,0,.27081-.08331.27081-.55206V10.10413c-.0625-.97913-.58331-1.0625-.58331-1.41663a.36008.36008,0,0,1,.375-.33337h2.29169c.3125,0,.41662.15625.41662.53125v2.89587c0,.3125.13544.41663.22919.41663.1875,0,.33331-.10413.67706-.44788a11.99877,11.99877,0,0,0,1.79169-2.97919.62818.62818,0,0,1,.63544-.41668H17.9375c.4375,0,.53125.21875.4375.53125A18.20507,18.20507,0,0,1,16.41669,12.25c-.15625.23956-.21875.36456,0,.64581.14581.21875.65625.64582,1,1.05207a6.48553,6.48553,0,0,1,1.22912,1.70837C18.77081,16.0625,18.5625,16.27081,18.14581,16.27081Z"/></svg>
-
-      </a>
-      <a class="ml-3 text-gray-400">
-        
-<svg width="20px" height="20px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#1e90ff" class="bi bi-telegram">
-<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
-</svg>
-
-      
-      <a class="ml-3 text-gray-400">
-        
-<svg fill="#ff0000" width="20px" height="20px" viewBox="-6 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m7.083 14.8-4.098 9.2h-2.986l4.5-9.834c-2.114-1.074-3.525-3.018-3.525-6.614-.005-5.034 3.185-7.551 6.979-7.551h3.858v24h-2.582v-9.2h-2.146zm2.147-12.62h-1.378c-2.08 0-4.097 1.378-4.097 5.372 0 3.858 1.847 5.1 4.097 5.1h1.378z"/></svg>
-
-      </a>
-    </span>
-  </div>
-</footer>
+        <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+            <a class="flex title-font font-medium items-center md:justify-start justify-center text-white">
+                <img src="https://images.icon-icons.com/1835/PNG/512/iconfindergiftsaleshop4177585-115977_115938.png" alt="Gift Icon" class="w-10 h-10 text-white p-2 bg-gray-400 rounded-full">
+                <span class="ml-3 text-xl">Amir</span>
+            </a>
+            <p class="text-sm text-gray-400 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-800 sm:py-2 sm:mt-0 mt-4">© 2026 Amir — <a href="https://t.me/Felenge_11" class="text-gray-500 ml-1" target="_blank"> @Felenge_11 </a></p>
+        </div>
+    </footer>
 
     <div id="messageBox" class="message-box">Сообщение отправлено!</div>
 
     <script>
-        // ВСЕ ТОВАРЫ - единый стиль
+        // ВСЕ ТОВАРЫ
         const products = [
-            // Для коллег
             {id:1, name:'Премиум-ручка с гравировкой', price:2990, category:'colleagues', categoryName:'Для коллег', image:'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=400&h=300&fit=crop'},
             {id:2, name:'Настольный органайзер', price:3490, category:'colleagues', categoryName:'Для коллег', image:'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=400&h=300&fit=crop'},
             {id:3, name:'Электронная фоторамка', price:5990, category:'colleagues', categoryName:'Для коллег', image:'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=400&h=300&fit=crop'},
             {id:4, name:'Бизнес-ежедневник', price:1990, category:'colleagues', categoryName:'Для коллег', image:'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=400&h=300&fit=crop'},
-            
-            // Для родных
             {id:5, name:'Фоторамка с LED-подсветкой', price:3490, category:'family', categoryName:'Для родных', image:'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=400&h=300&fit=crop'},
             {id:6, name:'Именная кружка с фото', price:1290, category:'family', categoryName:'Для родных', image:'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=400&h=300&fit=crop'},
             {id:7, name:'Плед с вышивкой', price:3990, category:'family', categoryName:'Для родных', image:'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=400&h=300&fit=crop'},
             {id:8, name:'Семейный фотоальбом', price:2490, category:'family', categoryName:'Для родных', image:'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=400&h=300&fit=crop'},
-            
-            // Для друзей
             {id:9, name:'VR-очки', price:12990, category:'friends', categoryName:'Для друзей', image:'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=400&h=300&fit=crop'},
             {id:10, name:'Портативная колонка', price:4990, category:'friends', categoryName:'Для друзей', image:'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=400&h=300&fit=crop'},
             {id:11, name:'Настольная игра', price:2990, category:'friends', categoryName:'Для друзей', image:'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=400&h=300&fit=crop'},
             {id:12, name:'Сертификат в квест-комнату', price:2500, category:'friends', categoryName:'Для друзей', image:'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=400&h=300&fit=crop'},
             {id:13, name:'Беспроводные наушники', price:6990, category:'friends', categoryName:'Для друзей', image:'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=400&h=300&fit=crop'},
             {id:14, name:'Смарт-часы', price:8990, category:'friends', categoryName:'Для друзей', image:'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=400&h=300&fit=crop'},
-            
-            // Дополнительные
             {id:15, name:'Умная колонка', price:5990, category:'friends', categoryName:'Для друзей', image:'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=400&h=300&fit=crop'},
             {id:16, name:'Сертификат Ozon', price:5000, category:'family', categoryName:'Для родных', image:'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=400&h=300&fit=crop'},
         ];
@@ -355,7 +356,6 @@
         let currentUser = null;
         let currentFilter = 'all';
 
-        // Инициализация БД
         function initDB() {
             if(!localStorage.getItem('users')) localStorage.setItem('users', JSON.stringify([]));
             if(!localStorage.getItem('orders')) localStorage.setItem('orders', JSON.stringify([]));
@@ -363,15 +363,14 @@
             if(!localStorage.getItem('cart')) localStorage.setItem('cart', JSON.stringify([]));
         }
 
-        // Запись визита
         function logVisit(userName, action) {
             let visits = JSON.parse(localStorage.getItem('visits')) || [];
             visits.push({name: userName, action: action, time: new Date().toLocaleString()});
             localStorage.setItem('visits', JSON.stringify(visits.slice(-100)));
         }
 
-        // Вход пользователя
-        function userLogin() {
+        // Функция входа/регистрации
+        window.userLogin = function() {
             let name = document.getElementById('loginName').value.trim();
             let phone = document.getElementById('loginPhone').value.trim();
             if(!name || !phone) { showMsg('Заполните все поля!'); return; }
@@ -381,61 +380,98 @@
             if(!existing) {
                 users.push({name: name, phone: phone, registered: new Date().toLocaleString()});
                 localStorage.setItem('users', JSON.stringify(users));
+                showMsg(`Добро пожаловать, ${name}! Регистрация успешна!`);
+            } else {
+                showMsg(`С возвращением, ${existing.name}!`);
+                name = existing.name;
             }
             currentUser = {name: name, phone: phone};
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
             logVisit(name, 'Вход на сайт');
             document.getElementById('authModal').classList.remove('active');
             updateUI();
-            showMsg(`Добро пожаловать, ${name}!`);
         }
 
+        // Обновление интерфейса (отображаем имя и кнопку выхода)
         function updateUI() {
             let saved = localStorage.getItem('currentUser');
-            if(saved) currentUser = JSON.parse(saved);
+            if(saved) {
+                currentUser = JSON.parse(saved);
+            } else {
+                currentUser = null;
+            }
             
-            let loginBtn = document.getElementById('loginBtn');
+            const userInfoDiv = document.getElementById('userInfo');
+            if(!userInfoDiv) return;
             
             if(currentUser) {
-                loginBtn.outerHTML = `<div class="flex items-center gap-2"><span class="text-indigo-400">${currentUser.name}</span><button onclick="logout()" class="bg-red-600 px-3 py-1 rounded text-sm">Выйти</button></div>`;
+                // Создаём блок с именем и кнопкой выхода
+                userInfoDiv.innerHTML = `
+                    <div class="user-info-container">
+                        <span class="user-name">👤 ${escapeHtml(currentUser.name)}</span>
+                        <button onclick="logout()" class="logout-btn">Выйти</button>
+                    </div>
+                    <button onclick="showAdminLogin()" class="text-gray-400 hover:text-indigo-400 text-sm">Админ</button>
+                `;
             } else {
-                loginBtn.outerHTML = `<button onclick="showAuthModal()" id="loginBtn" class="bg-indigo-600 px-4 py-1 rounded-lg text-sm hover:bg-indigo-700">Войти</button>`;
+                userInfoDiv.innerHTML = `
+                    <button onclick="showAuthModal()" class="bg-indigo-600 px-4 py-1 rounded-lg text-sm hover:bg-indigo-700">Войти</button>
+                    <button onclick="showAdminLogin()" class="text-gray-400 hover:text-indigo-400 text-sm">Админ</button>
+                `;
             }
         }
 
-        function logout() {
-            if(currentUser) logVisit(currentUser.name, 'Выход из сайта');
-            localStorage.removeItem('currentUser');
-            currentUser = null;
-            updateUI();
-            showMsg('Вы вышли из аккаунта');
+        // Функция выхода (полностью очищает сессию и корзину пользователя, но сохраняет корзину в истории? По желанию очищаем корзину текущего пользователя)
+        window.logout = function() {
+            if(currentUser) {
+                logVisit(currentUser.name, 'Выход из сайта');
+                // Очищаем корзину при выходе, чтобы у нового пользователя была пустая корзина (опционально)
+                localStorage.removeItem('cart');
+                localStorage.removeItem('currentUser');
+                currentUser = null;
+                updateCartCount(); // обновить счетчик
+                showMsg('Вы успешно вышли из аккаунта');
+                updateUI();
+                // Перерисовываем товары (на всякий случай)
+                renderProducts();
+            } else {
+                showMsg('Вы не авторизованы');
+            }
         }
 
-        function showAuthModal() { document.getElementById('authModal').classList.add('active'); }
+        function escapeHtml(str) {
+            if(!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if(m === '&') return '&amp;';
+                if(m === '<') return '&lt;';
+                if(m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        window.showAuthModal = function() { document.getElementById('authModal').classList.add('active'); }
         function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); }
 
-        // Фильтрация категорий
-        function filterCategory(category) {
+        window.filterCategory = function(category) {
             currentFilter = category;
             renderProducts();
-            showMsg(category === 'all' ? 'Показаны все подарки' : `Показаны подарки: ${category === 'colleagues' ? 'Для коллег' : category === 'family' ? 'Для родных' : 'Для друзей'}`);
+            let msg = category === 'all' ? 'Показаны все подарки' : `Показаны подарки: ${category === 'colleagues' ? 'Для коллег' : category === 'family' ? 'Для родных' : 'Для друзей'}`;
+            showMsg(msg);
         }
 
-        // Отображение товаров
         function renderProducts() {
             let container = document.getElementById('productsContainer');
+            if(!container) return;
             let filteredProducts = currentFilter === 'all' ? products : products.filter(p => p.category === currentFilter);
-            
             if(filteredProducts.length === 0) {
                 container.innerHTML = `<div class="w-full text-center py-12"><p class="text-gray-400 text-xl">В этой категории пока нет товаров</p></div>`;
                 return;
             }
-            
             container.innerHTML = filteredProducts.map(p => `
                 <div class="lg:w-1/3 md:w-1/2 p-4">
                     <div class="product-card rounded-xl overflow-hidden shadow-lg h-full flex flex-col">
                         <div class="h-56 overflow-hidden">
-                            <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" src="${p.image}" alt="${p.name}">
+                            <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" src="${p.image}" alt="${p.name}" onerror="this.src='https://placehold.co/400x300'">
                         </div>
                         <div class="p-5 flex-grow">
                             <div class="flex justify-between items-start mb-2">
@@ -446,9 +482,7 @@
                             <div class="flex justify-between items-center">
                                 <span class="text-2xl font-bold text-indigo-400">${p.price.toLocaleString()} ₽</span>
                                 <button onclick='addToCart(${JSON.stringify(p)})' class="btn-cart bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition flex items-center gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6M17 13l1.5 6M9 21h6M9 21a2 2 0 11-4 0m8 0a2 2 0 11-4 0" />
-                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6M17 13l1.5 6M9 21h6M9 21a2 2 0 11-4 0m8 0a2 2 0 11-4 0" /></svg>
                                     В корзину
                                 </button>
                             </div>
@@ -458,8 +492,7 @@
             `).join('');
         }
 
-        // Добавление в корзину
-        function addToCart(product) {
+        window.addToCart = function(product) {
             if(!currentUser) { showMsg('Сначала войдите в аккаунт!'); showAuthModal(); return; }
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             let existing = cart.find(item => item.id === product.id);
@@ -486,76 +519,40 @@
             }
         }
 
-        // Админ панель
+        // Админка
         let adminPassword = 'admin123';
-        
-        function showAdminLogin() {
+        window.showAdminLogin = function() {
             let pwd = prompt('Введите код доступа администратора:');
             if(pwd === adminPassword) {
                 document.getElementById('adminModal').classList.add('active');
                 showAdminTab('users');
             } else if(pwd) alert('Неверный код доступа');
         }
-
         function closeAdminModal() { document.getElementById('adminModal').classList.remove('active'); }
-
-        function showAdminTab(tab) {
+        window.showAdminTab = function(tab) {
             document.getElementById('tabUsers').className = 'px-4 py-2 ' + (tab==='users' ? 'bg-indigo-600' : 'bg-gray-700') + ' rounded-lg';
             document.getElementById('tabOrders').className = 'px-4 py-2 ' + (tab==='orders' ? 'bg-indigo-600' : 'bg-gray-700') + ' rounded-lg';
             document.getElementById('tabStats').className = 'px-4 py-2 ' + (tab==='stats' ? 'bg-indigo-600' : 'bg-gray-700') + ' rounded-lg';
-            
             let content = document.getElementById('adminContent');
             if(tab === 'users') {
                 let users = JSON.parse(localStorage.getItem('users')) || [];
                 let visits = JSON.parse(localStorage.getItem('visits')) || [];
-                content.innerHTML = `
-                    <h3 class="text-white font-bold mb-2">👥 Пользователи (${users.length})</h3>
+                content.innerHTML = `<h3 class="text-white font-bold mb-2">👥 Пользователи (${users.length})</h3>
                     ${users.map(u => `<div class="bg-gray-800 p-2 rounded mb-2"><span class="text-indigo-400">${u.name}</span> - ${u.phone}<br><span class="text-gray-500 text-xs">Регистрация: ${u.registered}</span></div>`).join('') || '<p class="text-gray-400">Нет пользователей</p>'}
                     <h3 class="text-white font-bold mt-4 mb-2">📊 История посещений</h3>
-                    ${visits.slice(-20).reverse().map(v => `<div class="bg-gray-800 p-1 rounded mb-1 text-sm"><span class="text-indigo-400">${v.name}</span> - ${v.action} <span class="text-gray-500 text-xs">${v.time}</span></div>`).join('') || '<p class="text-gray-400">Нет записей</p>'}
-                `;
+                    ${visits.slice(-20).reverse().map(v => `<div class="bg-gray-800 p-1 rounded mb-1 text-sm"><span class="text-indigo-400">${v.name}</span> - ${v.action} <span class="text-gray-500 text-xs">${v.time}</span></div>`).join('') || '<p class="text-gray-400">Нет записей</p>'}`;
             } else if(tab === 'orders') {
                 let orders = JSON.parse(localStorage.getItem('orders')) || [];
-                content.innerHTML = `
-                    <h3 class="text-white font-bold mb-2">📦 Все заказы (${orders.length})</h3>
-                    ${orders.slice().reverse().map(o => `
-                        <div class="bg-gray-800 p-3 rounded mb-3">
-                            <div class="flex justify-between">
-                                <span class="text-indigo-400 font-bold">Заказ №${o.orderNumber}</span>
-                                <span class="text-${o.status === 'completed' ? 'green' : 'yellow'}-400">${o.status === 'completed' ? '✅ Выполнен' : '🕐 В обработке'}</span>
-                            </div>
-                            <div class="text-sm text-gray-300">Покупатель: ${o.customerName}</div>
-                            <div class="text-sm text-gray-300">Телефон: ${o.customerPhone}</div>
-                            <div class="text-sm text-gray-300">Дата: ${o.date}</div>
-                            <div class="text-sm text-gray-300">Сумма: ${o.total.toLocaleString()} ₽</div>
-                            <div class="text-sm text-gray-400 mt-1">Товары: ${o.items.map(i => `${i.name} x${i.quantity}`).join(', ')}</div>
-                            <button onclick="updateOrderStatus(${o.orderNumber})" class="mt-2 bg-indigo-600 px-3 py-1 rounded text-xs">Изменить статус</button>
-                        </div>
-                    `).join('') || '<p class="text-gray-400">Нет заказов</p>'}
-                `;
+                content.innerHTML = `<h3 class="text-white font-bold mb-2">📦 Все заказы (${orders.length})</h3>
+                    ${orders.slice().reverse().map(o => `<div class="bg-gray-800 p-3 rounded mb-3"><div class="flex justify-between"><span class="text-indigo-400 font-bold">Заказ №${o.orderNumber}</span><span class="text-${o.status === 'completed' ? 'green' : 'yellow'}-400">${o.status === 'completed' ? '✅ Выполнен' : '🕐 В обработке'}</span></div><div class="text-sm text-gray-300">Покупатель: ${o.customerName}</div><div class="text-sm text-gray-300">Телефон: ${o.customerPhone}</div><div class="text-sm text-gray-300">Дата: ${o.date}</div><div class="text-sm text-gray-300">Сумма: ${o.total.toLocaleString()} ₽</div><div class="text-sm text-gray-400 mt-1">Товары: ${o.items.map(i => `${i.name} x${i.quantity}`).join(', ')}</div><button onclick="updateOrderStatus(${o.orderNumber})" class="mt-2 bg-indigo-600 px-3 py-1 rounded text-xs">Изменить статус</button></div>`).join('') || '<p class="text-gray-400">Нет заказов</p>'}`;
             } else if(tab === 'stats') {
                 let orders = JSON.parse(localStorage.getItem('orders')) || [];
                 let totalSales = orders.reduce((sum, o) => sum + o.total, 0);
                 let users = JSON.parse(localStorage.getItem('users')) || [];
-                content.innerHTML = `
-                    <h3 class="text-white font-bold mb-2">📈 Статистика</h3>
-                    <div class="bg-gray-800 p-4 rounded">
-                        <p class="text-2xl text-indigo-400">${totalSales.toLocaleString()} ₽</p>
-                        <p class="text-gray-400">Общая выручка</p>
-                    </div>
-                    <div class="bg-gray-800 p-4 rounded mt-3">
-                        <p class="text-2xl text-indigo-400">${orders.length}</p>
-                        <p class="text-gray-400">Всего заказов</p>
-                    </div>
-                    <div class="bg-gray-800 p-4 rounded mt-3">
-                        <p class="text-2xl text-indigo-400">${users.length}</p>
-                        <p class="text-gray-400">Зарегистрированных пользователей</p>
-                    </div>
-                `;
+                content.innerHTML = `<h3 class="text-white font-bold mb-2">📈 Статистика</h3><div class="bg-gray-800 p-4 rounded"><p class="text-2xl text-indigo-400">${totalSales.toLocaleString()} ₽</p><p class="text-gray-400">Общая выручка</p></div><div class="bg-gray-800 p-4 rounded mt-3"><p class="text-2xl text-indigo-400">${orders.length}</p><p class="text-gray-400">Всего заказов</p></div><div class="bg-gray-800 p-4 rounded mt-3"><p class="text-2xl text-indigo-400">${users.length}</p><p class="text-gray-400">Зарегистрированных пользователей</p></div>`;
             }
         }
-
-        function updateOrderStatus(orderNumber) {
+        window.updateOrderStatus = function(orderNumber) {
             let orders = JSON.parse(localStorage.getItem('orders'));
             let order = orders.find(o => o.orderNumber === orderNumber);
             if(order) {
@@ -565,16 +562,14 @@
                 showMsg(`Статус заказа №${orderNumber} изменен`);
             }
         }
-
-        function sendMessage() { showMsg('Сообщение отправлено! Мы свяжемся с вами'); }
-        function sendContact() { 
+        window.sendMessage = function() { showMsg('Сообщение отправлено! Мы свяжемся с вами'); }
+        window.sendContact = function() { 
             let name = document.getElementById('contactName').value;
             showMsg(`Спасибо, ${name || 'пользователь'}! Мы ответим вам в ближайшее время`); 
             document.getElementById('contactName').value=''; 
             document.getElementById('contactEmail').value=''; 
             document.getElementById('contactMsg').value=''; 
         }
-        
         function showMsg(text) { 
             let msg = document.getElementById('messageBox'); 
             msg.textContent = text; 
@@ -587,10 +582,17 @@
         renderProducts();
         updateUI();
         updateCartCount();
-        
-        // Закрытие модалки по клику вне
         document.getElementById('authModal').addEventListener('click', (e) => { if(e.target === document.getElementById('authModal')) closeAuthModal(); });
         document.getElementById('adminModal').addEventListener('click', (e) => { if(e.target === document.getElementById('adminModal')) closeAdminModal(); });
+        
+        // Ссылка на корзину (можно указать cart.html, но чтобы не было ошибки, оставим заглушку)
+        document.getElementById('cartLink')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            if(!currentUser) { showMsg('Войдите в аккаунт для просмотра корзины'); showAuthModal(); return; }
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if(cart.length === 0) showMsg('Корзина пуста');
+            else showMsg(`В корзине ${cart.reduce((s,i)=>s+i.quantity,0)} товаров. Оформите заказ через администратора.`);
+        });
     </script>
 </body>
 </html>
