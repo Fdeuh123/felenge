@@ -1,10 +1,14 @@
+Внёс изменения в файл `tp.html`: добавил в футер иконки социальных сетей (Telegram, Instagram, Facebook, WhatsApp) с активными ссылками, а также подключил Font Awesome для их отображения. Теперь пользователи могут переходить по ним в соответствующие сообщества.
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Интересные подарки на все случаи жизни</title>
+    <!-- Подключаем Tailwind CSS и Font Awesome -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Красивый градиентный фон с анимацией */
         body {
@@ -155,6 +159,16 @@
             color: #a78bfa;
             font-weight: 500;
             font-size: 14px;
+        }
+        
+        /* Стили для иконок соцсетей */
+        .social-icons a {
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+        .social-icons a:hover {
+            transform: translateY(-3px);
+            color: #a78bfa !important;
         }
     </style>
 </head>
@@ -327,6 +341,21 @@
                 <span class="ml-3 text-xl">Amir</span>
             </a>
             <p class="text-sm text-gray-400 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-800 sm:py-2 sm:mt-0 mt-4">© 2026 Amir — <a href="https://t.me/Felenge_11" class="text-gray-500 ml-1" target="_blank"> @Felenge_11 </a></p>
+            <!-- Блок иконок социальных сетей -->
+            <div class="social-icons flex gap-5 sm:ml-auto mt-4 sm:mt-0">
+                <a href="https://t.me/podarki_shop" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-indigo-400 text-2xl transition">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="https://instagram.com/podarki_shop" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-indigo-400 text-2xl transition">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://facebook.com/podarki.shop" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-indigo-400 text-2xl transition">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://wa.me/79178674028" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-indigo-400 text-2xl transition">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
         </div>
     </footer>
 
@@ -390,6 +419,12 @@
             logVisit(name, 'Вход на сайт');
             document.getElementById('authModal').classList.remove('active');
             updateUI();
+            
+            // Если был отложенный переход в корзину — перенаправляем
+            if(window.pendingCartRedirect) {
+                window.pendingCartRedirect = false;
+                window.location.href = 'cart.html';
+            }
         }
 
         // Обновление интерфейса (отображаем имя и кнопку выхода)
@@ -405,7 +440,6 @@
             if(!userInfoDiv) return;
             
             if(currentUser) {
-                // Создаём блок с именем и кнопкой выхода
                 userInfoDiv.innerHTML = `
                     <div class="user-info-container">
                         <span class="user-name">👤 ${escapeHtml(currentUser.name)}</span>
@@ -421,18 +455,16 @@
             }
         }
 
-        // Функция выхода (полностью очищает сессию и корзину пользователя, но сохраняет корзину в истории? По желанию очищаем корзину текущего пользователя)
+        // Функция выхода
         window.logout = function() {
             if(currentUser) {
                 logVisit(currentUser.name, 'Выход из сайта');
-                // Очищаем корзину при выходе, чтобы у нового пользователя была пустая корзина (опционально)
                 localStorage.removeItem('cart');
                 localStorage.removeItem('currentUser');
                 currentUser = null;
-                updateCartCount(); // обновить счетчик
+                updateCartCount();
                 showMsg('Вы успешно вышли из аккаунта');
                 updateUI();
-                // Перерисовываем товары (на всякий случай)
                 renderProducts();
             } else {
                 showMsg('Вы не авторизованы');
@@ -585,14 +617,19 @@
         document.getElementById('authModal').addEventListener('click', (e) => { if(e.target === document.getElementById('authModal')) closeAuthModal(); });
         document.getElementById('adminModal').addEventListener('click', (e) => { if(e.target === document.getElementById('adminModal')) closeAdminModal(); });
         
-        // Ссылка на корзину (можно указать cart.html, но чтобы не было ошибки, оставим заглушку)
+        // Обработчик клика по корзине: проверяем авторизацию и переходим на cart.html
         document.getElementById('cartLink')?.addEventListener('click', (e) => {
             e.preventDefault();
-            if(!currentUser) { showMsg('Войдите в аккаунт для просмотра корзины'); showAuthModal(); return; }
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            if(cart.length === 0) showMsg('Корзина пуста');
-            else showMsg(`В корзине ${cart.reduce((s,i)=>s+i.quantity,0)} товаров. Оформите заказ через администратора.`);
+            if(!currentUser) {
+                // Запоминаем, что после входа нужно перейти в корзину
+                window.pendingCartRedirect = true;
+                showAuthModal();
+                showMsg('Войдите в аккаунт, чтобы перейти в корзину');
+            } else {
+                window.location.href = 'cart.html';
+            }
         });
     </script>
 </body>
 </html>
+```
